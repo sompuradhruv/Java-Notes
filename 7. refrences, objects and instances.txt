@@ -1,0 +1,57 @@
+refrences, objects and instances
+
+A class can contain any of the following variable types.
+Local variables − Variables defined inside methods, constructors or blocks are called local variables. The variable will be declared and initialized within the method and the variable will be destroyed when the method has completed.
+Instance variables − Instance variables are variables within a class but outside any method. These variables are initialized when the class is instantiated. Instance variables can be accessed from inside any method, constructor or blocks of that particular class.
+Class variables − Class variables are variables declared within a class, outside any method, with the static keyword.
+
+Each time a new object is created(with the new keyword), the constructor will be invoked.
+
+objects are created to access instance variables or class variables from other public classes.
+local variables can only be accessed via functions(return keyword)
+
+**class is a blueprint
+for a class say class house we can use this blueprint of the class to build as many house we want
+these houses are called instances or objects
+all these houses(objects or instances) have an address known as refrence
+you can copy this refrence as many times u want but the house address remains the same
+in other words u can have multiple refrences to the same object
+
+class house{
+private string color;
+public House(String color)
+{
+this.color=color;
+}
+public string getcolor()
+{
+return color;
+}
+public void setcolor(string color)
+{
+this.color=color;
+}
+}
+//a class house with instance variable(field) color
+
+public class main()
+{
+psvm()
+{
+//this class will create instances of class house
+House bluehouse=new House("blue"); //this line creates a new instance for the house class and sets color to blue
+//bluehouse is a refrence that points to the object of type House in memory
+House anotherhouse=bluehouse; //both refrences point to the same object in memory now
+//we have 2 refrences for 1 object
+sopln(getcolor(anotherhouse)); //blue //as both bluehouse and another house point to the same object so they share the same characteristics
+sopln(getcolor(bluehouse)); //blue
+anotherhouse.setcolor("yellow"); //calls the method setcolor and sets the color to yelow
+sopln(getcolor(anotherhouse)); //yellow
+sopln(getcolor(bluehouse)); //yellow
+House greenhouse=new House("green"); //creates a new instance to the house class with color green
+anotherhouse=greenhouse; //anotherhouse and greenhouse becomes green and bluehouse is yellow
+//we have 3 refrences for 2 objects
+}}
+
+
+  

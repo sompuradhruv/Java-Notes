@@ -1,0 +1,309 @@
+java i/o:
+
+difference between scanner and i/o:
+
+scanner input was keyboard and output wasn't saved
+output is on monitor
+
+i/o input is file and output will be saved
+input is taken from a file
+and output is written in a file
+output can be written on monitor
+---------------------------------------------------
+java.io- package used for i/o
+
+Implementation of-
+
+byte stream- file i/o stream
+character stream- file reader/writer
+file stream-file reader/writer(done above)
+object stream- object serialiazation
+data stream- data intput/out
+buffered stream- buffered reader/writer
+-----------------------------------------------
+File Stream:
+
+create a new file:
+
+package com.company;
+
+import java.io.File;
+import java.io.IOException;
+
+public class io {
+public static void main(String[] args) {
+
+try {
+File myObj = new File("filename.txt"); //make object myObj that references a file called filename.txt
+//if filename.txt doesn't exist it will create it by itself
+
+if (myObj.createNewFile())  
+{
+System.out.println("File created: " + myObj.getName());
+} 
+else {
+System.out.println("File already exists.");
+}
+} 
+
+catch (IOException e) {
+System.out.println("An error occurred.");
+e.printStackTrace();
+}
+}
+}
+----------------------------------------------------------------------------------
+checking files available in directory:
+
+import java.io.*;
+class File2
+{
+public static void main(String[] args)
+{
+File f=new File("C:/uses.../");
+String filenames[]=f.list();
+for(String filename.filenames)
+{
+Sout(filename);
+}}}
+-------------------------------------------------
+write inside a file:
+
+package com.javatpoint;  
+import java.io.FileWriter; //imp import  
+
+public class Example { 
+ 
+public static void main(String args[]){  
+  
+try{    
+FileWriter fw=new FileWriter("D:\\testout.txt"); 
+//selecting/creating .txt/.doc file to write in  
+//if in the same directory just "file.txt"
+ 
+fw.write("This is magic"); //type inside file   
+fw.close(); //close filewriter class    
+}
+
+catch(Exception e)
+{System.out.println(e);}    
+
+System.out.println("Success...");    
+}    
+}  
+//if such file doesn't exist
+//then java creates a new file on its own
+//and types it by itself
+//fulltoo hacking matlab
+
+//you can also do:
+//Strig S="haha";
+//fw.write(S);
+//you can also create doc files using this
+------------------------------------------------------
+read a file:
+(or print the data inside a file)
+
+package com.company;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class name {
+
+public static void main(String[] args)
+{
+
+try{
+File f=new File("filename.txt"); //create object to reference the file filename.txt
+Scanner s=new Scanner(f); //scan the file that is referenced by the object f
+
+while(s.hasNextLine()) //keep looping till new line exists
+//basically read the whole file
+{
+String data=s.nextLine(); //read the next line and save it in data
+System.out.println(data); //print the line
+}
+s.close();
+}
+
+catch(FileNotFoundException e)
+{
+System.out.println("An error occured");
+}}}
+------------------------------------------------------------------------------------------------
+Byte Stream- file i/o stream
+
+package com.company;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+public class bytearray {
+    public static void main(String[] args) throws IOException {
+        ByteArrayOutputStream b=new ByteArrayOutputStream(12); //create object b of class ByteArrayOutputStream and size 12
+        while(b.size()!=10)
+        //5 as hello ka size is 5. agar 6 raha to error ayega. agar 10 raha to 2 baar print hoga. agar 15 hua to 3 baar and so on
+            //basically extra hello save hoge depending on the number inside b object
+        {
+            b.write("hello".getBytes()); //write hello but by bit into object b
+        }
+        byte b1[]=b.toByteArray(); //copy content of object b into array/object of datatype b1
+        System.out.println("print the content");
+        for(int x=0; x<6;x++) //agar 5 raha b1.lenght ke badle to 1 he baar print hoga. agar 6 raha to ek aur extra h print hoga
+        {
+            System.out.println((char)b1[x]+"1"); //print b1 //agar char nai hota to hello ke binary numbers print hote ie 10011 etc
+        }
+        int c;
+        ByteArrayInputStream binput=new ByteArrayInputStream(b1);
+        for(int y=0; y<1; y++)
+        {
+            while((c=binput.read())!=-1) //copy binput ka next byte to int c //keep on looping till last character
+            {
+                System.out.println(Character.toUpperCase((char) c));
+            }
+            binput.reset();
+        }
+    }
+
+
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Data input stream:
+
+package com.company;
+
+import java.io.*;
+
+public class bytearray {
+    public static void main(String[] args) throws IOException {
+                FileInputStream in = new FileInputStream("name.txt"); //acesssing file
+
+                DataInputStream di = new DataInputStream(in); //putting/copying file into object di of class datainputstream
+
+                int count = in.available(); //total number of bytes in the file
+
+                byte[] ary = new byte[count];  //array ary of datatype byte and size count is created
+
+                di.read(ary); //input stream is read and stored in array ary
+
+                for (byte bt : ary) //printing the file
+
+                {
+
+                    char k = (char) bt;
+
+                    System.out.print(k);
+
+                }
+
+            }
+
+        }
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Data Output Stream:
+
+package com.company;
+
+import java.io.*;
+
+public class bytearray {
+    public static void main(String[] args) throws IOException {
+        FileOutputStream f = new FileOutputStream("name.txt");
+
+        DataOutputStream data = new DataOutputStream(f); //data naam ka variable created for class dataoutputstream which will write into file f
+
+        data.writeChars("This is Dataoutputstream programming"); //writes this message into the file
+
+        data.flush();
+
+        data.close();
+
+        System.out.println("Success...");
+
+            }
+
+        }
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Buffer Output Stream:
+
+package com.company;
+
+import java.io.*;
+
+public class bytearray {
+    public static void main(String[] args) throws IOException {
+        try{
+
+            FileInputStream fin=new FileInputStream("name.txt");
+
+            BufferedInputStream bin=new BufferedInputStream(fin);
+
+            int i;
+
+            while((i=bin.read())!=-1){
+
+                System.out.print((char)i);
+
+            }
+
+            bin.close();
+
+            fin.close();
+
+        }catch(Exception e){System.out.println(e);}
+
+    }
+
+        }
+----------------------------------------------------------------------------------------------------------------
+Mark and Reset in bufferInputStream:
+
+package com.company;
+
+import java.io.*;
+
+public class bytearray {
+    public static void main(String[] args) throws IOException {
+        FileInputStream f= new FileInputStream("name.txt");
+
+        BufferedInputStream b= new BufferedInputStream(f);
+
+        // Read and print characters one by one
+        System.out.println("Char : "+ (char)buffInputStr.read());
+        System.out.println("Char : "+ (char)buffInputStr.read());
+        System.out.println("Char : "+ (char)buffInputStr.read());
+
+        // Mark is set on the current character stream
+        buffInputStr.mark(0);
+
+        System.out.println("Char : "+ (char)buffInputStr.read());
+
+        // Reset() is invoked
+        buffInputStr.reset();
+
+        // Read and print characters
+        System.out.println("Char : "+ (char)buffInputStr.read());
+        System.out.println("Char : "+ (char)buffInputStr.read());
+        buffInputStr.reset();
+        System.out.println("Char : "+ (char)buffInputStr.read());
+}
+}
+
+File content: Dhruvi
+Output: D h r u u v u
+
+//mark se current character pe mark lagta hai
+//reset se wapis marked character pe chale jata hai
+--------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+

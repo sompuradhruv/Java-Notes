@@ -1,0 +1,109 @@
+Exceptions:
+
+look before you leap(lbyl):
+normal method-
+
+function(int x, int y)
+{
+if(y!=0)
+return x/y;
+else
+return 0;
+//idar u check if denominator is zero or not before performing the action
+}
+----------------------------------------
+ask for forgiveness(afp):
+try catch method-
+
+function(int x, int y)
+{
+try
+{return x/y;}
+catch(ArithmeticException e)
+{return 0;}
+//idr u directly do the action and then check the condition 
+}
+
+if input is x=100 y=0
+function will check if arithmetic exception is there or not. 
+if it is preseent then output will be 0(because of return 0 in catch statement)
+if arithematic exception not there then it will return x/y(try statement)
+--------------------------------------------------------------
+exception jujutsu part 1
+
+(continuing a program even after an exception is caught)
+
+now it is important to make new/different functions and call them instead of directly writing the try catch in same function(jaha pe input lia) 
+as creating a new function gives u liberty to control your own exceptions
+normally compiler will throw an exception all by itself
+
+eg. int n=s.nextInt();
+//regardless of what you type after this compiler will throw an exception by itself
+//blah blah blah code compiler doesn't care
+
+eg. 
+
+int n=getNumberfunc();
+
+private static int getNumberfunc() {
+Scanner s = new Scanner(System.in);System.out.println("Please enter an integer ");
+
+while(true) {
+
+try {
+return s.nextInt(); //imp remember this thing to throw ur own exceptions
+} 
+
+catch(InputMismatchException e) {
+s.nextLine(); //to prevent infinite loop
+System.out.println("message to be displayed instead of exception message shown by compiler");
+}}}
+
+//now compiler will catch whatever exception u have done in the function and display the sout statement accordingly
+-------------------------------------------
+throwing exceptions:
+
+public static void validate(int age) {
+if(age<18) {
+//throw Arithmetic exception if not eligible to vote
+throw new ArithmeticException("Person is not eligible to vote");}
+else {
+System.out.println("Person is eligible to vote!!");
+}}
+
+if input is less than 18 output will be:
+Exception in thread "main" java.lang.ArithmeticException: Person is not eligible to vote
+--------------------------------------------
+exception jujutsu part 2: 
+
+(throwing exceptions of your choice)
+
+u can catch say InputMisMatch exception and throw arithmeticException using this 
+and inputmismatch ke badle compiler will show arithemetic exception ka msg using this trick:
+
+eg. 
+
+int n=getNumberfunc();
+
+private static int getNumberfunc() {
+
+Scanner s = new Scanner(System.in);System.out.println("Please enter an integer ");
+
+while(true) {
+
+try {
+return s.nextInt(); //imp remember this thing to throw ur own exceptions
+} 
+
+catch(InputMismatchException e) {
+throw new ArithmeticException("whatever xyz")
+//this will throw a completely new exception(arithmetic) instead of the correct one shown by compiler(inputmismatch)
+}}}
+
+//now compiler will throw whatever exception u have done in the function and display the output statement accordingly
+--------------------------------------
+catching multiple exceptions:
+
+catch(ArithmeticException | NoSuchElementException e){}
+-------------------------------------------------
+more stuff from ppt on exceptions(user ka khudka exception etc)

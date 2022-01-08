@@ -1,0 +1,67 @@
+this vs super the keyword battle
+
+super keyword is used to access parent class members(variables and functions)
+
+"this" keyword is used to access current class members. it is used when we have a parameter with the same name as the instance variable
+
+int varname;
+function(int varname)
+{this.varname=varname; //here this.objectname will refer to the variable outside the function this satement is written in. where as the normal varname refers to the parameter}
+if there is no parameter in a function then the keyword "this" is optional to use
+
+**A parameter is a value that you can pass to a method in Java. Then the method can use the parameter as though it were a local variable initialized with the value of the variable passed to it by the calling method.
+
+this()
+it is a keyword to call the main constructor from another overloaded constructor in the same class
+it should be the first statement in the overloaded constructor
+
+super()
+super() must be first line in each constructor
+if we dont add it, java compiler does it on its own
+super used to call parent constructors
+it is also used to access functions from parent class
+
+a constructor cant have both super() and this()
+
+eg. of this()
+public Rectangle()
+{
+this(0,0); //first constructor calls 2nd constructor
+}
+public Rectangle(int width, int height)
+{
+this(0,0,width,height); //2nd constructor calls 3rd constructor
+}
+public Rectangle(int x, int width, int height)
+{
+this.x=x;
+this.y=y;
+this.width=width;
+this.height=height; //3rd constructor initializes all variables
+}
+//this is called coonstructor chaining
+
+eg. of super()
+class Shape{
+private int x;
+private int y;
+public Shape(int x, int y)
+{
+this.x=x;
+this.y=y
+}
+}
+class Rectangle extends Shape{
+private int width;
+private int height;
+public Rectangle(int x, int y)
+{
+this(x,y,0,0); //first constructor calls 2nd constructor
+}
+public Rectangle(int x, int width, int height)
+{
+super(x,y); //calls parent constructor
+this.width=width;
+this.height=height; //this constructor initializes all variables
+}
+

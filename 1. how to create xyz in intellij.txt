@@ -1,0 +1,29 @@
+with package:
+1. new project
+2. see if java selected from left side column and amazon cortella 11 in upr ka dialog box(just check its already selected)
+3. next
+4. select package which is shown
+5. finish
+
+without package:
+1. new project
+2. see if java selected from left side column and amazon cortella 11 in upr ka dialog box for sdk(just check its already selected)
+3. next
+4. dont select any package
+5. finish
+6. right click src from left hand side
+7. new
+8. java class
+
+how to create a new class:
+left side se
+1. src
+2. package name pe right click(above the class icon)
+3. create class
+
+how to get getters and setters functions:
+1. select code from top menu
+2. select generate
+3. click on getter/setter
+4. select the field u want
+4. click ok

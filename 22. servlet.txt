@@ -1,0 +1,286 @@
+servlets:
+---------------------------------------------------------------------------------------------------------------------------
+life cycle methods:
+
+when u create the server-
+public abstract void init(javax.servlet.ServketConfig) //gets initialised 
+
+when request comes to process it-
+public void abstract service(javax.servlet.ServletRequest,javax.servlet.ServlerResponse) //gets executed
+
+when destroying object-
+public abstract void destroy(); //gets called
+------------------------------------------------------------------------------------------------------------------------------
+non life cycle methods:
+
+these methods only work when you call them. server itself never calls them
+
+public ServletConfig getServletConfig()
+{
+return this.conf;
+}
+public String getServletInfo()
+{
+return "servlet created by dhruv";
+}
+----------------------------------------------------------------------------------------------------------
+creating user defined servlets:
+
+class MyServlet implements Servlet
+{
+override the abstract methods
+}
+
+eg.
+
+class FirstServletimplements Servlet
+{
+Servlet conf;
+}
+public void init(ServletConfig conf)
+{
+this.conf=conf;
+//creating object
+}
+public void service(ServletRequest req,ServletResponse Resp) throws Servlet Exception,IOException
+{
+sout("servicing")
+}
+public void destroy()
+{
+sout("going to destroy");
+}
+
+//two non life cycle method:
+public ServletConfig getServletConfig()
+{
+return this.conf;
+}
+public String getServletInfo()
+{
+return "servlet created by dhruv";
+}
+}
+-------------------------------------------------------------------------------------
+mapping:
+
+<web-app>
+<servlet>
+<servlet-name>first</servlet-name>
+<servlet-calss>com.servlets.FirstServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>first<servlet-name>
+<url-pattern>/web</url-pattern>
+</servlet-mapping>
+
+</web-app>
+----------------------------------------------------------------------------------------------
+HTTP Servlet:
+
+public class MyServlet extends HttpServler{
+public void doGet(HttpServletRequest request, HttpServletResponse response) throws Exception
+{
+sout("get method"); //console ouput
+response.setContentType("text/html"); //html output
+PrintWriter out=response.getWriter();  //html output
+out.print("<h1>hello</h1>"); //html output
+}
+}
+
+for mapping:
+
+<web-app>
+<servlet>
+<servlet-name>myservlet</servlet-name>
+<servlet-calss>com.packagename.myservlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>myservlet<servlet-name>
+<url-pattern>/myservlet</url-pattern>
+</servlet-mapping>
+
+</web-app>
+----------------------------------------------------------------------------------------------------------------------------------------
+taking input from form:
+
+public class ResgisterServlet extends HttpServlet{
+public void doPost(HttpServletRequest request, HttpServletResponse response)
+{
+//fetching data
+String name=request.getParameter("username"); //brackets me form me jo textfield ka name hai vo
+String password=request.getParameter("password"); //do the same for choice box and checkboxes also
+response.setContentType("text/html"); //creating print object to print them
+PrintWriter out=response.getWriter();  
+out.println(username+" "+password); //printing userid and password
+
+//checking conditions
+String x=request.getParameter("form_fieldname");
+if(x.equals("checkbox_value") //bracket me write the "value" of the checkbox
+{}
+else
+{}
+}}
+
+html form:
+
+<form id="myform" action="RegisterServlet" method="post">
+//action me write servlet class ka naam
+username:<input type="text" name="username">
+password<input type="text" name="password">
+accept terms and conditions<input type="checkbox" value="checkbox_value" name="form_fieldname">
+<input type="submit>
+</form>
+
+mapping:
+
+<web-app>
+<servlet>
+<servlet-name>RegisterServlet</servlet-name>
+<servlet-calss>com.packagename.RegisterServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>RegisterServlet<servlet-name>
+<url-pattern>/RegisterServlet</url-pattern>
+</servlet-mapping>
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+request dispatcher:
+
+//takes to a new servlet page on button click
+
+eg. //inside servlet checking a checkbox's value:
+if(x != null)
+{}
+else{
+//if nothing selected in checkbox then take to this servlet that lauches a new or the same webpage
+RequestDispatcher rd=request.getRequestDispatcher("welcome"); //welcome is the name of the new servlet
+//you can directly go to a new webpage also:
+//RequestDispatcher rd=request.getRequestDispatcher("index.html"); //instead of welcome seedha html file
+//rd.include(request,response);
+}
+
+inside welcome.java:
+
+public class welcome extends HttpServlet
+{
+@override
+protected void doPost(HttpServlet req, HttpServletResponse res)
+{
+//this takes you to a new page
+//if you want you can directly write using print object like successfully registered
+}
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+only use of request dispatcher for your exam:
+
+(inside a server called myservlet)
+if(p.equals("aaa")) // this is condition checking line
+{
+RequestDispatcher rd=request.getRequestDispatcher("myservlet"); //agar condition haa hai to dont do anything 
+rd.forward(request, response);
+}
+else{
+out.print("Sorry UserName or Password Error!");
+RequestDispatcher rd=request.getRequestDispatcher("/index.html"); //displays index.html ka form with the above statement at top
+rd.include(request, response);
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+jdbc connectivity
+
+<form method="post" action="insertservlet">
+//take input
+<input type="submit" value="submit">
+</form>
+<form  method="get" action="retrieveservlet">
+<input type="submit" value="display">
+</form>
+
+insertservlet.java:
+
+public class insertservlet extends HttpServlet {
+Connection con;
+Statement s;
+String name,age,str;
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+response.setContentType("text/html");
+PrintWriter out = response.getWriter();
+name = request.getParameter("name");
+age = request.getParameter("age");
+//jdbc part
+try
+{
+Class.forName("com.mysql.jdbc.Driver");
+Connection con =DriverManager.getConnection("jdbc:mysql://localhost:3306/name","root","");
+Statement s = con.createStatement();
+String s1 = "insert into name( name, age) values ('"+name+"','"+age+"');";
+System.out.println("sucess");
+s.executeUpdate(s1);
+out.println("<h2> Data inserted</h2>");
+out.print("<form action=\"");
+out.print(response.encodeURL("index.html"));
+out.print("\" ");
+out.println("method=POST>");
+out.println("<input type=submit value=\"Homepage\">");
+out.println("</form>");
+}
+catch(Exception e){System.out.println(e);}
+}}
+
+retrieve servlet.java:
+public class retrieveservlet extends HttpServlet {
+String str;
+@Override
+protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+response.setContentType("text/html");
+try (PrintWriter out = response.getWriter()) {
+try
+{
+Class.forName("com.mysql.jdbc.Driver");
+Connection con =DriverManager.getConnection("jdbc:mysql://localhost:3306/name","root","");
+PreparedStatement statement = con.prepareStatement("select * from name");
+ResultSet rs = statement.executeQuery();
+while(rs.next())
+{
+str=str+ "<table border='1'>
+<tr><td>"+rs.getString(1)+"</td><td>"+rs.getString(2)+"</td></tr>";
+}
+str=str+"</table>";
+out.println(str);
+}
+catch(ClassNotFoundException | SQLException e ){}
+out.println("<h1> Sucess on retrieval</h1>");
+}
+}}
+------------------------------------------------------------------------------------------------------------------------------------------------
+extract names of employes whose experience is more than 10 years and increase salary by 10%:
+
+public class retrieveservlet extends HttpServlet {
+String str;
+@Override
+protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+response.setContentType("text/html");
+try (PrintWriter out = response.getWriter()) {
+try
+{
+Class.forName("com.mysql.jdbc.Driver");
+Connection con =DriverManager.getConnection("jdbc:mysql://localhost:3306/name","root","");
+PreparedStatement statement = con.prepareStatement("select * from name");
+ResultSet rs = statement.executeQuery();
+
+String name=rs.getString("name");
+int exp=getInt("exp");
+int sal=getInt("sal"); //sal,name and exp are all column names
+if(exp>10)
+{
+sal=sal+0.1*sal;
+}
+Statement stmt2 = con.createStatement();
+stmt2.executeUpdate("INSERT INTO customer(name,exp,sal)" + "VALUES('name',exp,sal)");
+//insert into ke sath write jdbc table ke variables and values ke sath write variablle you just created
+}
+catch(ClassNotFoundException | SQLException e ){}
+out.println("<h1> Sucess on retrieval</h1>");
+}
+}}

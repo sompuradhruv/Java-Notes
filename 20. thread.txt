@@ -1,0 +1,492 @@
+thread:
+
+creating thread:
+
+1. inside the main class-
+
+new Thread() {
+public void run() {
+System.out.println("Hello from the anonymous class thread");
+}
+}.start();
+----------------------------------------
+2. by creating another class-
+
+public class AnotherThread extends Thread {
+@Override
+public void run() {
+System.out.println(ANSI_BLUE + "Hello from another thread.");
+}}
+
+main class code:
+
+Thread anotherThread = new AnotherThread();
+anotherThread.start();
+----------------------------------------
+3. by creating runnable class-
+
+public class MyRunnable implements Runnable {
+@Override
+public void run() {
+System.out.println("Hello from MyRunnable's implementation of run()");
+}}
+
+main class code:
+
+Thread myRunnableThread = new Thread(new MyRunnable())
+
+to modify the output of runnable class:
+type this inside any class-
+
+Thread myRunnableThread = new Thread(new MyRunnable() {
+@Override
+public void run() {
+System.out.println("Hello from the anonymous class's implementation of run()");
+}}); //notice how the last bracket is a normal closing bracket
+//instead of a curly bracket
+---------------------------------------------
+thread functions:
+
+1. setName and getName-
+
+main function:
+Thread anotherthread = new anotherthread();
+anotherthread.setName("hi");
+anotherthread.start();
+
+other class:
+public class anotherthread extends Thread{
+@Override
+public void run() {
+System.out.println("Hello from " + currentThread().getName());}
+}
+
+output:
+Hello from hi
+
+//if you change anotherthread.start(); to anotherthread.run() output will be:
+//hello from main
+-------------------------------------------------
+2. sleep:
+
+main class code:
+
+Thread anotherthread = new anotherthread();
+anotherthread.start();
+
+other class:
+
+public class anotherthread extends Thread{
+@Override
+public void run() {
+System.out.println("Hello ji");
+try {
+Thread.sleep(3000);} 
+catch(InterruptedException e) { 
+System.out.println("Another thread woke me up");
+}
+System.out.println( "Three seconds have passed and I'm awake");
+return;
+}}
+
+output: 
+Hello ji
+three seconds have passed and I am awake
+//"three secs have passed..." will appear after a delay of 3 seconds after "hello ji" has been printed
+//another thread woke me up the statement inside catch block doesnt get printed
+------------------------------------------------
+3. interrupt:
+
+(same code as above class only one line extra)
+in the main class:
+
+Thread anotherthread = new anotherthread();
+anotherthread.start();
+anotherthread.interrupt();
+
+other class:
+
+public class anotherthread extends Thread{
+@Override
+public void run() {
+System.out.println("Hello ji");
+try {
+Thread.sleep(3000);} 
+catch(InterruptedException e) { 
+System.out.println("Another thread woke me up");
+return;
+}
+System.out.println( "Three seconds have passed and I'm awake");
+}}
+
+output:
+Hello ji
+anotherthread woke me up
+//this whole output will appear without any delay at all
+==============================================================
+//if you remove the retrun; line from inside the catch block(inturrupt rahega main class me)
+
+output:
+Hello ji
+anotherthread woke me up
+three seconds have passed and I am awake
+
+//all these appears without any delay
+//return; se sirf seedha main function ya jis function se call kia udr return ho jata hai
+//uske neecha ka lines will not run
+==============================================================
+------------------------------------------------------------------------------------------------
+4. join
+
+main class code:
+
+Thread anotherthread = new anotherthread();
+anotherthread.start(); //anotherthread class not executed yet as join not called(agar niche join nai lika hota to ho jata execute idr he)
+Thread runnable = new Thread(new runnable() {
+@Override
+public void run() {
+System.out.println("message 1");
+try{
+anotherthread.join(2000); //go to anotherthread class and execute everything and print according to the time limit
+System.out.println("message 2"); //comeback and print from here
+}
+catch(InterruptedException e)
+{
+System.out.println("message 3");
+}
+System.out.println("Hello from the anonymous class's implementation of run()");
+}});
+runnable.start();
+
+runnable class code:
+
+public class runnable implements Runnable {
+@Override
+public void run() {
+System.out.println("Hello from MyRunnable's implementation of run()");
+}}
+
+anotherthread class code:
+
+public class anotherthread extends Thread {
+@Override
+public void run() {
+System.out.println("Hello from " + currentThread().getName());
+try {
+Thread.sleep(10000);
+} catch(InterruptedException e) {
+System.out.println("Another thread woke me up");
+return;
+}
+System.out.println( "Three seconds have passed and I'm awake");
+}}
+
+output:
+message 1
+Hello from Thread-0
+message 2 //comes in after 2 seconds
+Hello from the anonymous class's implementation of run() //comes in imediately with above line
+Three seconds have passed and I'm awake //comes in after 10 seconds after the function is run
+
+//in the line anotherthread.join(200); 200 seconds seconds defines the time after which everything after this statement will be printed
+//agar 200 seconds nai hota aur line was just anotherthread.join(); then everything after this gets printed without a delay
+//(except for anotherthread class ke under ka content which still prints after 10 seconds)
+//join calls the other class
+//you still need anotherthread.start() to be written before using this
+//start function initialises the anotherthread function
+//without start nothing from another thread gets printed
+//join is like function calling it basically tells the program when to call the other class/thread
+//agar join had 10 sec delay and anotherclass had 2 second delay 
+//then another class ka lines will be printed after 2 seconds
+//and uske turant baad join ke niche ka stuff is printed(no futher delay)
+//join basically puts the current thread on wait until the other thread is called
+//runnable.start ke bina kuch b print nai hota
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Threading concepts:
+//check the program written 
+//at the end of synchronization
+//that program should be main reference 
+//for furture threading related programs
+
+1. Multithreading:
+
+package com.company;
+
+class RunnableDemo implements Runnable {
+private Thread t;
+private String threadName;
+
+RunnableDemo( String name) {
+threadName = name;
+System.out.println("Creating " +  threadName );
+}
+
+public void run() {
+System.out.println("Running " +  threadName );
+try {
+for(int i = 4; i > 0; i--) {
+System.out.println("Thread: " + threadName + ", " + i);
+Thread.sleep(50);
+}
+} catch (InterruptedException e) {
+System.out.println("Thread " +  threadName + " interrupted.");
+}
+System.out.println("Thread " +  threadName + " exiting.");
+}
+
+public void start () {
+System.out.println("Starting " +  threadName );
+}}
+
+//=========
+
+class TestThread {
+public static void main(String args[]) {
+RunnableDemo R1 = new RunnableDemo( "Thread-1");
+R1.start();
+RunnableDemo R2 = new RunnableDemo( "Thread-2");
+R2.start();
+}}
+
+output:
+Creating Thread-1
+Starting Thread-1
+Creating Thread-2
+Starting Thread-2
+Running Thread-1
+Running Thread-2
+Thread: Thread-1, 4
+Thread: Thread-2, 4
+Thread: Thread-1, 3
+Thread: Thread-2, 3
+Thread: Thread-1, 2
+Thread: Thread-2, 2
+Thread: Thread-1, 1
+Thread: Thread-2, 1
+Thread Thread-2 exiting.
+Thread Thread-1 exiting.
+
+//both threads work simulataneously
+//first when object is created it calls the constructor
+//then r1.start is called
+//then same process for r2
+//then r1 is run along with r2(run method)
+----------------------------------------------------------------------------------------------------
+2. Synchronisation
+
+//only one thread can access the resource 
+//at a given point of time.
+
+//All synchronized blocks can only have 
+//one thread executing inside them at a time. 
+//All other threads attempting to enter 
+//the synchronized block are blocked 
+//until the thread inside 
+//the synchronized block exits the block.
+
+ways to synchronise:
+
+1. in the function itself
+
+eg in above program just do:
+
+public synchronized void run(//blah blah)
+//everything else same only one word added
+
+output:
+Creating Thread-1
+Starting Thread-1
+Running Thread-1
+Thread: Thread-1, 4
+Thread: Thread-1, 3
+Thread: Thread-1, 2
+Thread: Thread-1, 1
+Thread Thread-1 exiting.
+Creating Thread-2
+Starting Thread-2
+Running Thread-2
+Thread: Thread-2, 4
+Thread: Thread-2, 3
+Thread: Thread-2, 2
+Thread: Thread-2, 1
+Thread Thread-2 exiting.
+
+//pehle thread 1 ka sab execute hua 
+//fir thread 2 ka sab hua
+
+2. for a block //using this keyword
+
+eg for the above program:
+
+public void run() {
+synchronized(this) 
+//whatever is inside the next curly brackets gets synced
+{
+System.out.println("Running " +  threadName );
+try {
+for(int i = 4; i > 0; i--) {
+System.out.println("Thread: " + threadName + ", " + i);
+Thread.sleep(50);
+}
+} catch (InterruptedException e) {
+System.out.println("Thread " +  threadName + " interrupted.");
+}
+System.out.println("Thread " +  threadName + " exiting.");
+}
+}
+//end of sync
+
+3. for an object only
+
+eg.(for some other program)
+
+public void run() {
+synchronized (tcount) {
+tcount.doCountdown();
+}
+----------------------------------------------------------------------
+****main program to implement threading concepts****
+
+//this is the main class containing the main function
+
+public class timdemo {
+public static void main(String[] args) {
+Countdown cd = new Countdown(); //create object cd of class countdown(the second class)
+CountdownThread t1 = new CountdownThread(cd); //create an object of the thread class //and send cd as parameter in the thread class constructor
+t1.setName("Thread 1"); //t1 thread ke liye jab getname use kia jayega tab "thread 1" naam use hoga
+CountdownThread t2 = new CountdownThread(cd);
+t2.setName("Thread 2");
+t1.start();
+t2.start();
+}
+}
+
+//this is the "second class" //it contains the real function to be used
+class Countdown {
+private int i;
+//real function of the program //that we are supposed to use
+public void doCountdown() {        
+for(i=10; i > 0; i--) {
+System.out.println(Thread.currentThread().getName() + ": i =" + i);
+}
+}
+}
+
+//this is the thread class
+class CountdownThread extends Thread {
+private Countdown tcount; //create object tcount of class countdown
+//tcount is used to take the value cd from the main class 
+//transferring the value cd to tcount
+public CountdownThread(Countdown cdvalue) //cdvalue=cd
+{
+tcount = cdvalue;
+}
+//run method
+public void run() {
+tcount.doCountdown();
+}
+}
+//to sync the program:
+//method 1: sync the function doCountdown //not run function
+//method 2: sync the for loop block only(using sync(this))
+//method 3: sync the variable tcount(see example in sync section)
+------------------------------------------------------------------------------------------------------------
+Wait Method:
+
+eg.
+
+//2nd class named gunshot
+//contain the 2 functions
+//functions should be synced to use wait
+
+public class gunshot {
+
+private int bullets = 40;
+
+//first function
+
+synchronized public void fire(int bulletsToBeFired)
+{
+for (int i = 1; i <= bulletsToBeFired; i++) {
+
+//if bullets are empty then we will have to reload
+if (bullets == 0) {
+System.out.println(i - 1+ " bullets fired and "+ bullets + " remains");
+System.out.println("Invoking the wait() method");
+
+//wait makes the thread execution completely stop
+//until notify is called statements after this won't execute
+//after wait is called execution goes to the second new thread ie gf.reload
+//if notify isn't written nothing at all happens in the program after this
+try {
+wait();
+}
+catch (InterruptedException e) {
+}
+//gun is reloaded now
+System.out.println("Continuing the fire after reloading");
+}
+
+//if bullets aren't empty subtract the bullets by bulletsToBeFired number of times
+//see for loop up if confused
+else{
+bullets--;}
+}
+
+//outside the for loop
+System.out.println(
+"The firing process is complete");
+}
+
+//second function
+synchronized public void reload()
+{
+System.out.println("Reloading the magazine and resuming the thread using notify()");
+bullets += 40;
+
+//this will go back to the wait statement 
+//and the lines after wait are executed
+notify();
+}
+}
+
+//main thread class with main function
+class WaitDemo extends Thread {
+public static void main(String[] args)
+{
+
+//creating an object gf of class gunshot
+gunshot gf = new gunshot();
+
+//call fire function
+new Thread() {
+@Override public void run() { gf.fire(60); }
+}.start();
+
+//call reload function
+new Thread() {
+@Override public void run() { gf.reload(); }
+}.start();
+}
+}
+
+Output:
+
+40 bullets fired and 0 remains
+Invoking the wait() method
+Reloading the magazine and resuming the thread using notify()
+Continuing the fire after reloading
+The firing process is complete
+
+//pehle new thread wala first chalu hoga
+//fir gf.fire run hoga
+//agar bullets bacha hai to problem nai
+//agar bullets empty hai to 
+//fir wait pe pochege
+//fir second new thread pe jayege wait call karnese
+//fir reload chalega
+//fir reload hoga(bullets increase)
+//fir notify se wapis wait pe jayege
+//wait ke niche ke statements execute hoge
+-----------------------------------------------------------------------------------------------------------
+

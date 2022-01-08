@@ -1,0 +1,32 @@
+creating objects:
+
+say there are two classes class main and class car
+
+public class Main{
+function_name(){
+Car porsche= new Car(); //to access public variables from a public class
+Car suzuki= new Car();
+porsche.modleno=40056; 
+porsche.setModelno(40056);
+sopln(porsche.getModel()); //prints what is returned
+}
+}
+
+second class:
+public class Car{
+public int modelno; //no need for function name
+private int car_number; //cant be accessed by other classes
+public void setModelno(STring modelno)
+{
+this.modelno=modelno; //this modleno is class ka public modleno and modleno(normal) is function wala modleno)
+//updates the value of class wala modleno to the value passed in parameter
+}
+public int getModelno()
+{
+return this.modleno;
+}
+
+*you cant access even public variables without creating an object in another class
+*to access public variables from a public class create an object and use objectname.variablename=xyz;
+*to access private variables from a private class use public getters and setter. u cant access them directly by using objectname.variablename.
+*this is same in inherited classes

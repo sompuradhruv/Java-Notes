@@ -1,0 +1,18 @@
+array declaration-
+int[] arr= new int[10];
+
+array is a refrence type which means
+int[] arr={1,2,3,4,5};
+int[] arr2=arr;
+arr2[0]=10;
+//now arr2 becomes 10,2,3,4,5
+//and arr will also become the same
+//that is arr=10,2,3,4,5
+//it means arr2 ke changes are refelcted in arr
+//this is beacuse array is refrence type
+//like objects both arr and arr2 point to the same place in memory
+//changes in arr are reflected in arr2
+//changes in arr2 are reflected in arr
+int[] arr3=arr;
+arr3=new int[] {1,2,3,4,5};
+//as we added new int statement now arr3 points to a new different location so changes in arr3 will not be reflected in arr or arr2

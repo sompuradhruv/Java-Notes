@@ -1,0 +1,69 @@
+long-
+10l
+
+float-
+10f
+
+double-
+10d
+
+for conversion-
+d=(short) 3;
+
+string concatination using +:
+s="abc" + "def"
+then s="abcdef"
+
+int i=5
+String s="10"
+s=s+i
+//now s will store "105"
+
+u can have as many && u want in if
+eg. if(c1 && c2 && c3) {} //will work
+
+ternary-
+car= condition1 ? whentrue : whenfalse;
+
+to call function from another class
+objectname.functionname(value to argument);
+
+normal way-
+functionname(value);
+when function is not void-
+functiondatatype variablename=functionname(value);
+
+how to write function:
+public static void/int/etc name(int a, String s)
+
+Scanner sc= new Scanner(System.in); //s ke badle u can use other name like s also its only a name
+String s= sc.nextLine(); 
+//nextFloat(); nextInt(); etc
+
+String s="234";
+int i= Integer.parseInt(s); //converts string to int
+Float.parseFloat() //for float
+
+String s= Integer.toString(i); //int to string
+String s= String.valueOf(i); //other way
+
+boolean a= sc.hasNextInt(); //a=0 if input isnt a number
+----------------------------------------------------------
+while taking string input in between int and float etc
+eg.
+Scanner sc=new Scanner();
+int b= sc.nextInt();
+sc.nextLine(); //do this before taking string input
+String names=sc.nextLine();
+float price=sc.nextfloat();
+--------------------------------------
+charAt()
+
+String st="Dhruv";
+st.charAt(4; //=v
+-------------------------------
+Character.isDigit();
+
+char ch=4;
+Character.isDigit(ch);//true
+---------------------------------

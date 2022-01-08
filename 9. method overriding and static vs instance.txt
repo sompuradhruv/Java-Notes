@@ -1,0 +1,124 @@
+method overriding and static vs instance
+
+overridden method must have same name and same arguments
+now lower access modifier ie if parent method has protected as modifier then kid method cant have private but can have public
+constructors and private methods cant be overriden
+
+overriding has same name and same parameters whereas overloading has same name but different parameters
+overloaded method can have different access modifiers unlike in overriding(lower access modifiers not allowed)
+An overloaded method may or may not have different return types
+
+static methods
+cant use this keyword
+methods that doesnt use instance variables then it should be declared as a static method
+can access static methods directly
+
+static method calling-
+if in different classes use classname.methodname()
+if in same class use methodname()
+no need to make instance
+
+eg.
+class calculator{
+public static void printsum(int a, int b)
+{
+sopln()
+}
+}
+class main
+{
+psvm()
+{
+calculator.printsum(5,10); //as in different class but both static
+printhello(); //as in same class and both static
+}
+psv printhello()
+{
+sopln("hello");
+}
+}
+
+instance methods-
+to acces these you have to make object using new keyword first
+can directly access instance methods and variables directly
+can also accesss static methods and variables directly
+
+eg.
+class dog
+{
+somefunction{//instance function}
+}
+class main
+{
+psvm()
+{
+Dog rex=new Dog;
+rex.somefunction(); //static methods cant access instance methods directly
+}
+
+instance variable vs staic variable
+Instance variables can be accessed directly by calling the variable name inside the 
+class. However, within static methods (when instance variables are given accessibility), 
+they should be called using the fully qualified name. ObjectReference.VariableName.
+
+Static variables can be accessed by calling with the class name 
+ClassName.VariableName.
+
+public class VariableExample{
+   int myVariable;
+   static int data = 30;
+   
+   public static void main(String args[]){
+      VariableExample obj = new VariableExample();
+      
+      System.out.println("Value of instance variable: "+obj.myVariable); //objname.variablename
+      System.out.println("Value of static variable: "+VariableExample.data); //classname.variablename
+   }
+}
+	
+static variables have the same value for all the objects
+
+class Test{
+public static int a = 5;
+public int b = 10;
+}
+// here t1 and t2 will have a separate copy of b
+// while they will have same copy of a.
+Test t1 = new test(); 
+Test t2 = new test();
+Test.a = 1//some value But you can not access instance variable like this
+System.out.println(t1.a);
+System.out.println(t2.a);
+t1.b = 15 // will not be reflected in t2.
+System.out.println(t1.b); // this will print 15
+System.out.println(t2.b); / this will still print 10; 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+accessing functions:
+
+to access static methods from another class(regardless of the function from which you are calling): classname.functionname();
+to access instance methods from another class(regardless of the function from which you are calling): objectname.functionname();
+
+to call static method from another static method(same class)- functionname();
+to call static method from another instance method(same class)- functionname();
+to call instance method from another instance method(same class)- functionname();
+
+to call instance method from a static method(same class)- objectname.functionname(); 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+accessing variables:
+
+to access static variable of another class(regardless of the function from which you are calling)- classname.variablename;
+to access instance variable of another class(regardless of the function from which you are calling)- objectname.variablename; 
+
+to access static variable of same class from a static method(outside the function)- variablename; 
+to access static variable of same class from an instance method(outside the function)- variablename;
+to access instance variable of same class from an instance method(outside any function)- variablename;
+
+to access instance variable of same class from a static method(variable outside any function)- objectname.variablename;
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+*static variables are always outside the function as static variables can't be created inside a function
+*you can't use access modifiers like public or private for variables inside a function. you also can't use static for variables inside a function(hence the above statement)
+
+*you cant access variables inside another function in any way. only way is to access the function first and see if it returns the variable you want or not
+*eg to to access instance variable of same class from a static method(variable inside different function)- objectname.functionname() //you will have to call the function and see if it returns that variable as there is no way to access a variable created inside another function
+
+*if the variable is inside the same function doesn't matter if the function is static or not you can access it directly by just using it's variablename normally

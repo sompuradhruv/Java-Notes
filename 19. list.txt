@@ -1,0 +1,41 @@
+Lists
+
+defining arraylist:
+ArrayList<datatype> ListName=new ArrayList<datatype>();
+eg. AarayList<Syring> listn= new ArrayList<String>();
+
+() is there because ArrayList is a class. () calls an empty constructor of class ArrayList
+
+(array declaration was: int[] name=new int[10];)
+
+to add elememts:
+ListName.add("ItemName");
+eg. listn.add("xyz");
+
+display elements:
+eg.
+for(int i=0; i<listn.size(); i++)
+{
+sout(listn.get(i));
+}
+
+index of item:
+int VariableName=ListName.indexOf("ItemName");
+eg. int pos=listn.indexOf("abc");
+modify:
+ListName.set(position,itemname);
+eg. listn.set(2,"abc");
+
+remove:
+ListName.remove(position);
+eg. listn.remove(2);
+
+finding items:
+boolean VariableName=ListName.constains("ItemName");
+eg.
+boolean exists= listn.contains("abc"); //ans is true or false obv
+
+list to array conversion:
+for (int i =0; i < list.size(); i++)
+arr[i] = list.get(i);
+
